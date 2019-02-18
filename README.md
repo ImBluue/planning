@@ -1,2 +1,2 @@
-# planning
-Planning for students from USMB
+# Planning USMB Android
+Android application - Planning for students from USMB
