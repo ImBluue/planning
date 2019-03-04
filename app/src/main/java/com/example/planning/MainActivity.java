@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Toast.makeText(getApplicationContext(),
                 "Updating...",
                 Toast.LENGTH_LONG).show();
-        start("ANNECY", "IUT", "INFO", "INFO2S4", "G22");
+        start("ANNECY", "IUT", "CSSAP", "CSSAP1", "TP1A");
 
     }
 

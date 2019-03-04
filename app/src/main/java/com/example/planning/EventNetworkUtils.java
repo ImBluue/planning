@@ -75,7 +75,7 @@ public class EventNetworkUtils {
                 }
             }
         }
-        //Log.d(TAG, eventJSONString);
+        Log.d(TAG, eventJSONString);
         return eventJSONString;
     }
 
