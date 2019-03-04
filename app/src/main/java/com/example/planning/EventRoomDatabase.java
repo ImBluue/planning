@@ -57,10 +57,7 @@ public abstract class EventRoomDatabase extends RoomDatabase {
 
         @Override
         protected Void doInBackground(final Void... params) {
-            ArrayList<Event> listEvent = MainActivity.GetDataHttp();
-            for (Event e:listEvent) {
-                mDao.insert(e);
-            }
+
             return null;
         }
     }

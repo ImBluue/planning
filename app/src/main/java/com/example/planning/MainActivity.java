@@ -2,15 +2,22 @@ package com.example.planning;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -21,13 +28,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
     private RecyclerView mRecyclerView;
     private String TAG = MainActivity.class.getSimpleName();
     private ArrayList<Event> mEventData;
     private EventListAdapter mAdapter;
     private EventViewModel mEventViewModel;
     private Observer obs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,18 +51,7 @@ public class MainActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mEventViewModel = ViewModelProviders.of(this).get(EventViewModel.class);
-        if(isOnline()) {
-            mEventViewModel.deleteall();
-            Toast.makeText(getApplicationContext(),
-                    "Updating...",
-                    Toast.LENGTH_LONG).show();
-
-        }else
-        {
-            Toast.makeText(getApplicationContext(),
-                    "No internet connection, loaded the last version",
-                    Toast.LENGTH_LONG).show();
-        }
+        mEventViewModel.deleteall();
         mEventViewModel.getAllEvents().observe(this, new Observer<List<Event>>() {
             @Override
             public void onChanged(@Nullable final List<Event> events) {
@@ -62,94 +59,82 @@ public class MainActivity extends AppCompatActivity {
                 mAdapter.setEvents(events);
             }
         });
+        Toast.makeText(getApplicationContext(),
+                "Updating...",
+                Toast.LENGTH_LONG).show();
+        start("ANNECY", "IUT", "INFO", "INFO2S4", "G22");
 
+    }
+
+    public void start(String campus, String school, String department, String training, String group){
+        Bundle queryBundle = new Bundle();
+        queryBundle.putString("campus", campus);
+        queryBundle.putString("school", school);
+        queryBundle.putString("department", department);
+        queryBundle.putString("training", training);
+        queryBundle.putString("group", group);
+
+
+        getSupportLoaderManager().restartLoader(0, queryBundle, this);
+    }
+
+    @NonNull
+    @Override
+    public Loader onCreateLoader(int id, @Nullable Bundle args) {
+         String campus = "";
+         String school = "";
+         String department = "";
+         String training = "";
+         String group = "";
+
+        if (args != null) {
+            campus = args.getString("campus");
+            school = args.getString("school");
+            department = args.getString("department");
+            training = args.getString("training");
+            group = args.getString("group");
+        }
+
+        return new EventLoader(this, campus, school, department, training, group);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
+    public void onLoadFinished(@NonNull Loader<String> loader, String data) {
+        ArrayList<Event> mEventData = getEvents(data);
+        for (Event event:mEventData) {
+            mEventViewModel.insert(event);
+        }
     }
+
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
+    public void onLoaderReset(@NonNull Loader<String> loader) {
 
-        if (id == R.id.update) {
-            if(isOnline()) {
-                // Add a toast just for confirmation
-                Toast.makeText(this, "Updating...",
-                        Toast.LENGTH_SHORT).show();
-
-                new GetAllEvents().execute();
-            }else
-                Toast.makeText(this, "No internet connection",
-                        Toast.LENGTH_SHORT).show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
-    public static boolean isOnline() {
-        Runtime runtime = Runtime.getRuntime();
-        try {
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
-            int     exitValue = ipProcess.waitFor();
-            return (exitValue == 0);
-        }
-        catch (IOException e)          { e.printStackTrace(); }
-        catch (InterruptedException e) { e.printStackTrace(); }
-
-        return false;
-    }
-
-    public static ArrayList<Event> GetDataHttp(String url){
+    public static ArrayList<Event> getEvents(String data) {
         ArrayList<Event> listEvents = new ArrayList<>();
-        String TAG = MainActivity.class.getSimpleName();
-        HttpHandler sh = new HttpHandler();
-        // Making a request to url and getting response
-        String jsonStr = sh.makeServiceCall(url);
-        Log.e(TAG, "Response from url: " + jsonStr);
-        if (jsonStr != null) {
-            try {
-                JSONObject jsonObj = new JSONObject(jsonStr);
+        Log.e("data", data);
 
-                // Getting JSON Array node
-                JSONArray chars = jsonObj.getJSONArray("events");
+        try {
+            JSONObject jsonObj = new JSONObject(data);
 
-                // looping through All Contacts
-                for (int i = 0; i < chars.length(); i++) {
-                    JSONObject c = chars.getJSONObject(i);
-                    // adding contact to contact list
-                    listEvents.add(new Event(i,c.getString("description"), c.getString("summary"), c.getString("location"), c.getString("end"), c.getString("start"), c.getString("day")));
-                }
-            } catch (final JSONException e) {
-                Log.e(TAG, "Json parsing error: " + e.getMessage());
+            // Getting JSON Array node
+            JSONArray chars = jsonObj.getJSONArray("events");
 
-
+            // looping through All Contacts
+            for (int i = 0; i < chars.length(); i++) {
+                JSONObject c = chars.getJSONObject(i);
+                // adding contact to contact list
+                listEvents.add(new Event(i, c.getString("description"), c.getString("summary"), c.getString("location"), c.getString("end"), c.getString("start"), c.getString("day")));
             }
 
-        } else {
-            Log.e(TAG, "Couldn't get json from server.");
+        } catch (final JSONException e) {
+            Log.e("JSON", "Json parsing error: " + e.getMessage());
         }
         return listEvents;
+
+
     }
 
-    private class GetAllEvents extends AsyncTask<Void, Void, Void> {
 
-        @Override
-        protected Void doInBackground(Void... voids) {
-            mEventData = GetDataHttp("http://api.valentin-baud.fr/planning/?campus=ANNECY&school=IUT&department=INFO&training=INFO2S4&group=G22");
-            return null;
-        }
-        @Override
-        protected void onPostExecute(Void result) {
-            mEventViewModel.deleteall();
-            for (Event event:mEventData) {
-                mEventViewModel.insert(event);
-            }
-
-        }
-    }
 }
