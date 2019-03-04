@@ -104,12 +104,11 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
-    public static ArrayList<Event> GetDataHttp(){
+    public static ArrayList<Event> GetDataHttp(String url){
         ArrayList<Event> listEvents = new ArrayList<>();
         String TAG = MainActivity.class.getSimpleName();
         HttpHandler sh = new HttpHandler();
         // Making a request to url and getting response
-        String url = "http://api.valentin-baud.fr/planning/?campus=ANNECY&school=IUT&department=INFO&training=INFO2S4&group=G22";
         String jsonStr = sh.makeServiceCall(url);
         Log.e(TAG, "Response from url: " + jsonStr);
         if (jsonStr != null) {
@@ -141,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            mEventData = GetDataHttp();
+            mEventData = GetDataHttp("http://api.valentin-baud.fr/planning/?campus=ANNECY&school=IUT&department=INFO&training=INFO2S4&group=G22");
             return null;
         }
         @Override
