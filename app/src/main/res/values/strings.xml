@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">planning</string>
+    <string name="app_name">EDT</string>
+    <string name="actualiser">Actualiser</string>
+    <string name="update">Update</string>
 </resources>
