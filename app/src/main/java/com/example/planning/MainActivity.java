@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         String TAG = MainActivity.class.getSimpleName();
         HttpHandler sh = new HttpHandler();
         // Making a request to url and getting response
-        String url = "http://edt.valentin-baud.fr/api/";
+        String url = "http://api.valentin-baud.fr/planning/?campus=ANNECY&school=IUT&department=INFO&training=INFO2S4&group=G22";
         String jsonStr = sh.makeServiceCall(url);
         Log.e(TAG, "Response from url: " + jsonStr);
         if (jsonStr != null) {
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
                 for (int i = 0; i < chars.length(); i++) {
                     JSONObject c = chars.getJSONObject(i);
                     // adding contact to contact list
-                    listEvents.add(new Event(i,c.getString("description"), c.getString("summary"), c.getString("group"), c.getString("location"), c.getString("end"), c.getString("start"), c.getString("day")));
+                    listEvents.add(new Event(i,c.getString("description"), c.getString("summary"), c.getString("location"), c.getString("end"), c.getString("start"), c.getString("day")));
                 }
             } catch (final JSONException e) {
                 Log.e(TAG, "Json parsing error: " + e.getMessage());

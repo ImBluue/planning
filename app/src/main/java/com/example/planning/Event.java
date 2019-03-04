@@ -16,9 +16,6 @@ public class Event {
     @ColumnInfo(name = "summary")
     private String summary;
     @NonNull
-    @ColumnInfo(name = "group")
-    private String group;
-    @NonNull
     @ColumnInfo(name = "location")
     private String location;
     @NonNull
@@ -40,11 +37,10 @@ public class Event {
                 '}';
     }
 
-    public Event(int id, @NonNull String description, @NonNull String summary, @NonNull String group, @NonNull String location, @NonNull String end, @NonNull String start, @NonNull String day) {
+    public Event(int id, @NonNull String description, @NonNull String summary, @NonNull String location, @NonNull String end, @NonNull String start, @NonNull String day) {
         this.id = id;
         this.description = description;
         this.summary = summary;
-        this.group = group;
         this.location = location;
         this.day = day;
         this.end = end;
@@ -78,15 +74,6 @@ public class Event {
 
     public void setSummary(@NonNull String sumamary) {
         this.summary = summary;
-    }
-
-    @NonNull
-    public String getGroup() {
-        return group;
-    }
-
-    public void setGroup(@NonNull String group) {
-        this.group = group;
     }
 
     @NonNull
