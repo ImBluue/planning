@@ -34,13 +34,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ArrayList<Event> mEventData;
     private EventListAdapter mAdapter;
     private EventViewModel mEventViewModel;
-    private Observer obs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = findViewById(R.id.recyclerview);
+        setUpView();
+        start("ANNECY", "IUT", "CSSAP", "CSSAP1", "TP1A");
+
+    }
+
+    public void setUpView(){
+        mRecyclerView = findViewById(R.id.listRecyclerView);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize the ArrayList that will contain the data.
@@ -62,8 +67,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         Toast.makeText(getApplicationContext(),
                 "Updating...",
                 Toast.LENGTH_LONG).show();
-        start("ANNECY", "IUT", "CSSAP", "CSSAP1", "TP1A");
-
     }
 
     public void start(String campus, String school, String department, String training, String group){
@@ -113,8 +116,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     public static ArrayList<Event> getEvents(String data) {
         ArrayList<Event> listEvents = new ArrayList<>();
-        Log.e("data", data);
-
         try {
             JSONObject jsonObj = new JSONObject(data);
 

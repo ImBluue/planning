@@ -35,7 +35,6 @@ public class EventNetworkUtils {
                     .appendQueryParameter("training", training)
                     .appendQueryParameter("group", group)
                     .build();
-            Log.e("URI", builtURI.toString());
             URL requestURL = new URL(builtURI.toString());
             urlConnection = (HttpURLConnection) requestURL.openConnection();
             urlConnection.setRequestMethod("GET");
