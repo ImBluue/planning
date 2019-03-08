@@ -45,6 +45,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     public int getItemCount() {
         return mEventsData.size();
     }
+
     class EventViewHolder extends RecyclerView.ViewHolder {
         private TextView description;
         private TextView summary;
@@ -52,7 +53,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         private TextView start;
         private TextView end;
         private TextView day;
-        private RelativeLayout container;
 
         private EventViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,7 +62,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             start = itemView.findViewById(R.id.start);
             end = itemView.findViewById(R.id.end);
             day = itemView.findViewById(R.id.day);
-            container = itemView.findViewById(R.id.container);
         }
 
 
