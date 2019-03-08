@@ -13,7 +13,8 @@ import java.util.List;
 public interface EventDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Event event);
-
+    @Query("SELECT * from event_table WHERE day = :currentDate ORDER BY id ASC")
+    LiveData<List<Event>> getEventsDate(String currentDate);
     @Query("SELECT * from event_table ORDER BY id ASC")
     LiveData<List<Event>> getAllEvents();
     @Query("DELETE FROM event_table")

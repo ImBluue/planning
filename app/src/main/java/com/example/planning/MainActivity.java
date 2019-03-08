@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;
@@ -24,6 +26,7 @@ import org.json.JSONObject;
 import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.format.DateTimeFormatter;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,25 +34,45 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String>{
+public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     private RecyclerView mRecyclerView;
     private String TAG = MainActivity.class.getSimpleName();
     private ArrayList<Event> mEventData;
     private EventListAdapter mAdapter;
     private EventViewModel mEventViewModel;
     private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+    private ProgressBar percentBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startLoader("ANNECY", "IUT", "INFO", "INFO2S4", "G22");
         setUpView();
+
+
+
 
     }
 
-    public void setUpView(){
+    public static boolean isOnline() {
+        Runtime runtime = Runtime.getRuntime();
+        try {
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int exitValue = ipProcess.waitFor();
+            return (exitValue == 0);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    public void setUpView() {
+        percentBar = findViewById(R.id.progressBar1);
         mRecyclerView = findViewById(R.id.listRecyclerView);
+        mRecyclerView.setVisibility(View.INVISIBLE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         // Initialize the ArrayList that will contain the data.
@@ -60,17 +83,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mEventViewModel = ViewModelProviders.of(this).get(EventViewModel.class);
-        mEventViewModel.deleteall();
-        mEventViewModel.getAllEvents().observe(this, new Observer<List<Event>>() {
-            @Override
-            public void onChanged(@Nullable final List<Event> events) {
-                // Update the cached copy of the words in the adapter.
-                mAdapter.setEvents(events);
-            }
-        });
-        Toast.makeText(getApplicationContext(),
-                "Updating...",
-                Toast.LENGTH_LONG).show();
+
 
         MaterialCalendarView mcv = findViewById(R.id.calendarView);
         Calendar calendar = Calendar.getInstance();
@@ -115,9 +128,24 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         mcv.addDecorator(new DisableWeekendsDecorator());
 
 
+
+        if(isOnline()) {
+            startLoader("ANNECY", "IUT", "INFO", "INFO2S4", "G22");
+            Toast.makeText(getApplicationContext(),
+                    "Updating...",
+                    Toast.LENGTH_LONG).show();
+        } else
+        {
+            percentBar.setVisibility(View.INVISIBLE);
+            mRecyclerView.setVisibility(View.VISIBLE);
+        }
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+        Date date = new Date();
+        display(dateFormat.format(date));
+
     }
 
-    public void startLoader(String campus, String school, String department, String training, String group){
+    public void startLoader(String campus, String school, String department, String training, String group) {
         Bundle queryBundle = new Bundle();
         queryBundle.putString("campus", campus);
         queryBundle.putString("school", school);
@@ -132,11 +160,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @NonNull
     @Override
     public Loader onCreateLoader(int id, @Nullable Bundle args) {
-         String campus = "";
-         String school = "";
-         String department = "";
-         String training = "";
-         String group = "";
+        String campus = "";
+        String school = "";
+        String department = "";
+        String training = "";
+        String group = "";
 
         if (args != null) {
             campus = args.getString("campus");
@@ -145,24 +173,31 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             training = args.getString("training");
             group = args.getString("group");
         }
-
         return new EventLoader(this, campus, school, department, training, group);
     }
 
-    private void display(String date){
-        mEventViewModel.deleteall();
-        for (Event event:mEventData) {
-            if(event.getDay().equals(date))
-                mEventViewModel.insert(event);
-        }
-        Log.e("HOP","Finished!");
+    private void display(String date) {
+        mEventViewModel.getEventsDate(date).observe(this, new Observer<List<Event>>() {
+            @Override
+            public void onChanged(@Nullable final List<Event> events) {
+                // Update the cached copy of the words in the adapter.
+                mAdapter.setEvents(events);
+                Log.e("hop",mRecyclerView.getAdapter().getItemCount()+"");
+
+            }
+        });
     }
 
     @Override
     public void onLoadFinished(@NonNull Loader<String> loader, String data) {
         mEventData = getEvents(data);
-        Date date = new Date();
-        display(dateFormat.format(date));
+        percentBar.setVisibility(View.INVISIBLE);
+        mRecyclerView.setVisibility(View.VISIBLE);
+        mEventViewModel.deleteall();
+        for (Event event : mEventData) {
+            mEventViewModel.insert(event);
+        }
+        Log.e("HOP", "Finished!");
     }
 
     @Override

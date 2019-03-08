@@ -28,7 +28,9 @@ public class EventRepository {
     public void update (List<Event> events) {
         new UpdateAsyncTask(mEventDao).execute(events);
     }
-
+    LiveData<List<Event>> getEventsDate (String date) {
+        return mEventDao.getEventsDate(date);
+    }
     private static class insertAsyncTask extends AsyncTask<Event, Void, Void> {
 
         private EventDao mAsyncTaskDao;
