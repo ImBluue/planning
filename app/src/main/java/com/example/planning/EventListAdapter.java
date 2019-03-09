@@ -1,6 +1,7 @@
 package com.example.planning;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -53,6 +54,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         private TextView start;
         private TextView end;
         private TextView day;
+        private RelativeLayout container;
 
         private EventViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,6 +64,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             start = itemView.findViewById(R.id.start);
             end = itemView.findViewById(R.id.end);
             day = itemView.findViewById(R.id.day);
+            container = itemView.findViewById(R.id.container);
         }
 
 
@@ -72,7 +75,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             start.setText(currentEvent.getStart());
             end.setText(currentEvent.getEnd());
             day.setText(currentEvent.getDay());
-
         }
     }
 }

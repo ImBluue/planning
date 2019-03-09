@@ -24,7 +24,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.LocalDate;
 import org.threeten.bp.format.DateTimeFormatter;
+import org.threeten.bp.temporal.TemporalAdjusters;
 
 import java.io.IOException;
 import java.text.DateFormat;
@@ -33,6 +35,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     private RecyclerView mRecyclerView;
@@ -40,7 +43,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ArrayList<Event> mEventData;
     private EventListAdapter mAdapter;
     private EventViewModel mEventViewModel;
-    private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
+    private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy", Locale.FRANCE);
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
     private ProgressBar percentBar;
 
     @Override
@@ -91,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         int currentDay = 0;
         switch (day) {
             case Calendar.SUNDAY:
-                currentDay = 6;
+                currentDay = 7;
                 break;
             case Calendar.MONDAY:
                 currentDay = 1;
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 currentDay = 3;
                 break;
             case Calendar.SATURDAY:
-                currentDay = 7;
+                currentDay = 6;
                 break;
         }
         mcv.state().edit()
@@ -117,12 +121,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 .setMinimumDate(CalendarDay.today())
                 .setCalendarDisplayMode(CalendarMode.WEEKS)
                 .commit();
-        mcv.setDateSelected(CalendarDay.today(), true);
+
         mcv.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView widget, @NonNull CalendarDay date, boolean selected) {
-                DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yy");
-                display(date.getDate().format(dtf));
+                display(date.getDate().format(DateTimeFormatter.ofPattern("dd-MM-yy")));
             }
         });
         mcv.addDecorator(new DisableWeekendsDecorator());
@@ -139,9 +142,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             percentBar.setVisibility(View.INVISIBLE);
             mRecyclerView.setVisibility(View.VISIBLE);
         }
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy");
-        Date date = new Date();
-        display(dateFormat.format(date));
+        if(currentDay == 6 || currentDay == 7){
+            LocalDate ld = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
+            mcv.setDateSelected(CalendarDay.from(ld), true);
+            display(ld.format(formatter));
+        }
+        else{
+            mcv.setDateSelected(CalendarDay.today(), true);
+            Date date = new Date();
+            display(dateFormat.format(date));
+        }
+
+
 
     }
 
@@ -182,7 +194,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             public void onChanged(@Nullable final List<Event> events) {
                 // Update the cached copy of the words in the adapter.
                 mAdapter.setEvents(events);
-                Log.e("hop",mRecyclerView.getAdapter().getItemCount()+"");
 
             }
         });
