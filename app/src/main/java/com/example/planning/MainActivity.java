@@ -43,7 +43,6 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private ArrayList<Event> mEventData;
     private EventListAdapter mAdapter;
     private EventViewModel mEventViewModel;
-    private DateFormat dateFormat = new SimpleDateFormat("dd-MM-yy", Locale.FRANCE);
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
     private ProgressBar percentBar;
 
@@ -116,11 +115,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
                 currentDay = 6;
                 break;
         }
-        mcv.state().edit()
-                .setFirstDayOfWeek(DayOfWeek.of(currentDay))
-                .setMinimumDate(CalendarDay.today())
-                .setCalendarDisplayMode(CalendarMode.WEEKS)
-                .commit();
+        //.setFirstDayOfWeek(DayOfWeek.of(currentDay))
+
 
         mcv.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -146,11 +142,18 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
             LocalDate ld = LocalDate.now().with(TemporalAdjusters.next(DayOfWeek.MONDAY));
             mcv.setDateSelected(CalendarDay.from(ld), true);
             display(ld.format(formatter));
+            mcv.state().edit()
+                    .setMinimumDate(CalendarDay.from(ld))
+                    .setCalendarDisplayMode(CalendarMode.WEEKS)
+                    .commit();
         }
         else{
             mcv.setDateSelected(CalendarDay.today(), true);
-            Date date = new Date();
-            display(dateFormat.format(date));
+            display(LocalDate.now().format(formatter));
+            mcv.state().edit()
+                    .setMinimumDate(CalendarDay.today())
+                    .setCalendarDisplayMode(CalendarMode.WEEKS)
+                    .commit();
         }
 
 
