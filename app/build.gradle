@@ -39,4 +39,7 @@ dependencies {
     implementation 'com.android.support:design:27.1.1'
 
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
+
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
 }
