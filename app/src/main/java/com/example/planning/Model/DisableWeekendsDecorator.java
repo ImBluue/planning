@@ -1,4 +1,4 @@
-package com.example.planning;
+package com.example.planning.Model;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;

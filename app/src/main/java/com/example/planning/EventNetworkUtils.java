@@ -1,11 +1,9 @@
 package com.example.planning;
 
-import android.content.Context;
 import android.net.Uri;
-import android.os.AsyncTask;
-import android.support.annotation.Nullable;
-import android.support.v4.content.AsyncTaskLoader;
 import android.util.Log;
+
+import com.example.planning.Model.Cursus;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,17 +21,17 @@ public class EventNetworkUtils {
 
 
 
-    static String getEventsInfo(String campus, String school, String department, String training, String group){
+    static String getEventsInfo(Cursus cursus){
         String eventJSONString = null;
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         try {
             Uri builtURI = Uri.parse(EVENT_BASE_URL).buildUpon()
-                    .appendQueryParameter("campus", campus)
-                    .appendQueryParameter("school", school)
-                    .appendQueryParameter("department", department)
-                    .appendQueryParameter("training", training)
-                    .appendQueryParameter("group", group)
+                    .appendQueryParameter("campus", cursus.getCampus())
+                    .appendQueryParameter("school", cursus.getSchool())
+                    .appendQueryParameter("department", cursus.getDepartment())
+                    .appendQueryParameter("training", cursus.getTraining())
+                    .appendQueryParameter("group", cursus.getGroup())
                     .build();
             URL requestURL = new URL(builtURI.toString());
             urlConnection = (HttpURLConnection) requestURL.openConnection();

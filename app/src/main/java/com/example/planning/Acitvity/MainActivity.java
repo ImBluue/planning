@@ -1,4 +1,4 @@
-package com.example.planning;
+package com.example.planning.Acitvity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -15,6 +15,13 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.planning.Adapter.EventListAdapter;
+import com.example.planning.Model.DisableWeekendsDecorator;
+import com.example.planning.EventLoader;
+import com.example.planning.EventViewModel;
+import com.example.planning.Model.Cursus;
+import com.example.planning.Model.Event;
+import com.example.planning.R;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -29,13 +36,9 @@ import org.threeten.bp.format.DateTimeFormatter;
 import org.threeten.bp.temporal.TemporalAdjusters;
 
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     private RecyclerView mRecyclerView;
@@ -129,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
         if(isOnline()) {
-            startLoader("ANNECY", "IUT", "INFO", "INFO2S4", "G22");
+            startLoader(new Cursus("ANNECY", "IUT", "INFO", "INFO2S4", "G22"));
             Toast.makeText(getApplicationContext(),
                     "Updating...",
                     Toast.LENGTH_LONG).show();
@@ -160,13 +163,9 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
-    public void startLoader(String campus, String school, String department, String training, String group) {
+    public void startLoader(Cursus cursus) {
         Bundle queryBundle = new Bundle();
-        queryBundle.putString("campus", campus);
-        queryBundle.putString("school", school);
-        queryBundle.putString("department", department);
-        queryBundle.putString("training", training);
-        queryBundle.putString("group", group);
+        queryBundle.putParcelable("cursus", cursus);
 
 
         getSupportLoaderManager().restartLoader(0, queryBundle, this);
@@ -175,23 +174,14 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     @NonNull
     @Override
     public Loader<String> onCreateLoader(int id, @Nullable Bundle args) {
-        String campus = "";
-        String school = "";
-        String department = "";
-        String training = "";
-        String group = "";
-
+        Cursus cursus = new Cursus();
         if (args != null) {
-            campus = args.getString("campus");
-            school = args.getString("school");
-            department = args.getString("department");
-            training = args.getString("training");
-            group = args.getString("group");
+            cursus = args.getParcelable("cursus");
         }
-        return new EventLoader(this, campus, school, department, training, group);
+        return new EventLoader(this, cursus);
     }
 
-    private void display(String date) {
+    public void display(String date) {
         mEventViewModel.getEventsDate(date).observe(this, new Observer<List<Event>>() {
             @Override
             public void onChanged(@Nullable final List<Event> events) {

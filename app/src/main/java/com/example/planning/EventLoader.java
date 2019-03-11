@@ -4,28 +4,21 @@ import android.content.Context;
 import android.support.annotation.Nullable;
 import android.support.v4.content.AsyncTaskLoader;
 
+import com.example.planning.Model.Cursus;
+
 public class EventLoader extends AsyncTaskLoader<String> {
     @Nullable
     @Override
     public String loadInBackground() {
-        return EventNetworkUtils.getEventsInfo(campus, school, department, training, group);
+        return EventNetworkUtils.getEventsInfo(cursus);
     }
     @Override
     protected void onStartLoading() {
         super.forceLoad();
     }
-    private String campus;
-    private String school;
-    private String department;
-    private String training;
-    private String group;
-
-    EventLoader(Context context, String campus, String school, String department, String training, String group) {
+    private Cursus cursus;
+    public EventLoader(Context context, Cursus cursus) {
         super(context);
-        this.campus = campus;
-        this.school = school;
-        this.department = department;
-        this.training = training;
-        this.group = group;
+        this.cursus = cursus;
     }
 }

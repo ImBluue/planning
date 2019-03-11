@@ -1,5 +1,14 @@
 <resources>
     <string name="app_name">Planning</string>
-    <string name="actualiser">Actualiser</string>
-    <string name="update">Update</string>
+    *
+    <string name="welcome_page_string">Bienvenue dans Planning USMB ! Commençons par trouver ta formation</string>
+    <string name="localisation_button_string">Je suis sur place ! Me localiser</string>
+    <string name="manuel_button_string">Trouver comme un grand !</string>
+    <string name="campus_page_title">Choississez\nvotre campus</string>
+    <string name="school_page_title">Votre composante</string>
+    <string name="dep_page_title">Votre département</string>
+    <string name="training_page_title">Votre formation</string>
+    <string name="group_page_title">Votre groupe</string>
+    <string name="application_logo_string">Application_logo</string>
+    <string name="title_activity_welcome">WelcomeActivity</string>
 </resources>

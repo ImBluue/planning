@@ -1,7 +1,6 @@
-package com.example.planning;
+package com.example.planning.Adapter;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,26 +9,29 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.planning.Model.Event;
+import com.example.planning.R;
+
 import java.util.List;
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventViewHolder> {
     private List<Event> mEventsData;
     private Context mContext;
 
-    EventListAdapter(Context context, List<Event> eventsData) {
+    public EventListAdapter(Context context, List<Event> eventsData) {
         this.mEventsData = eventsData;
         this.mContext = context;
     }
 
     @NonNull
     @Override
-    public EventListAdapter.EventViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+    public EventViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         return new EventViewHolder(LayoutInflater.from(mContext).
                 inflate(R.layout.eventlist_item, viewGroup, false));
     }
 
     @Override
-    public void onBindViewHolder(@NonNull EventListAdapter.EventViewHolder eventViewHolder, int i) {
+    public void onBindViewHolder(@NonNull EventViewHolder eventViewHolder, int i) {
         // Get current sport.
         Event currentEvent = mEventsData.get(i);
 
@@ -37,7 +39,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         eventViewHolder.bindTo(currentEvent);
     }
 
-    void setEvents(List<Event> events){
+    public void setEvents(List<Event> events){
         mEventsData = events;
         notifyDataSetChanged();
     }

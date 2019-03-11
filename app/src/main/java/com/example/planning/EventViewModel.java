@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
+import com.example.planning.Model.Event;
+
 import java.util.List;
 
 public class EventViewModel extends AndroidViewModel {
@@ -14,9 +16,9 @@ public class EventViewModel extends AndroidViewModel {
         mRepository = new EventRepository(application);
         mAllEvents = mRepository.getAllEvents();
     }
-    LiveData<List<Event>> getAllEvents() { return mAllEvents; }
+    public LiveData<List<Event>> getAllEvents() { return mAllEvents; }
     public void insert(Event event) { mRepository.insert(event); }
     public void deleteall() { mRepository.deleteAll(); }
     public void update(List<Event> events) { mRepository.update(events); }
-    LiveData<List<Event>> getEventsDate(String date) {return mRepository.getEventsDate(date);}
+    public LiveData<List<Event>> getEventsDate(String date) {return mRepository.getEventsDate(date);}
 }
