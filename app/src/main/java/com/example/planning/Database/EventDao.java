@@ -1,4 +1,4 @@
-package com.example.planning;
+package com.example.planning.Database;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;

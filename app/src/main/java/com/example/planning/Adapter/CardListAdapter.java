@@ -10,10 +10,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import com.example.planning.Acitvity.DepartmentActivity;
-import com.example.planning.Acitvity.GroupActivity;
-import com.example.planning.Acitvity.SchoolActivity;
-import com.example.planning.Acitvity.TrainingActivity;
+import com.example.planning.Activity.DepartmentActivity;
+import com.example.planning.Activity.GroupActivity;
+import com.example.planning.Activity.MainActivity;
+import com.example.planning.Activity.SchoolActivity;
+import com.example.planning.Activity.TrainingActivity;
 import com.example.planning.Model.Card;
 import com.example.planning.R;
 
@@ -38,7 +39,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
 
     //Appel contenu du ViewHolder
     @Override
-    public void onBindViewHolder(CardViewHolder viewHolder, int i) {
+    public void onBindViewHolder(@NonNull CardViewHolder viewHolder, int i) {
         Card card = mCardList.get(i);
         viewHolder.bindTo(card);
     }
@@ -54,7 +55,7 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
 
         private TextView mTextView;
 
-        public CardViewHolder(@NonNull View itemView) {
+        CardViewHolder(@NonNull View itemView) {
             super(itemView);
             mTextView = itemView.findViewById(R.id.campusname);
             //Evenement OnClick
@@ -88,7 +89,10 @@ public class CardListAdapter extends RecyclerView.Adapter<CardListAdapter.CardVi
                             mContext.startActivity(intentTraining);
                             break;
                         case GROUP:
-
+                            Intent intentGroup = new Intent(mContext, MainActivity.class);
+                            card.getCursus().setGroup(card.getName());
+                            intentGroup.putExtra("cursus", card.getCursus());
+                            mContext.startActivity(intentGroup);
                             break;
                     }
                 }

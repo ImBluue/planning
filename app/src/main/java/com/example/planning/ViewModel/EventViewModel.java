@@ -1,9 +1,10 @@
-package com.example.planning;
+package com.example.planning.ViewModel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 
+import com.example.planning.Database.EventRepository;
 import com.example.planning.Model.Event;
 
 import java.util.List;

@@ -1,9 +1,11 @@
-package com.example.planning;
+package com.example.planning.Database;
 
 import android.app.Application;
 import android.arch.lifecycle.LiveData;
 import android.os.AsyncTask;
 
+import com.example.planning.Database.EventDao;
+import com.example.planning.Database.EventRoomDatabase;
 import com.example.planning.Model.Event;
 
 import java.util.List;
@@ -12,13 +14,13 @@ public class EventRepository {
     private EventDao mEventDao;
     private LiveData<List<Event>> mAllEvents;
 
-    EventRepository(Application application) {
+    public EventRepository(Application application) {
         EventRoomDatabase db = EventRoomDatabase.getDatabase(application);
         mEventDao = db.eventDao();
         mAllEvents = mEventDao.getAllEvents();
     }
 
-    LiveData<List<Event>> getAllEvents() {
+    public LiveData<List<Event>> getAllEvents() {
         return mAllEvents;
     }
     public void deleteAll()  {
@@ -30,7 +32,7 @@ public class EventRepository {
     public void update (List<Event> events) {
         new UpdateAsyncTask(mEventDao).execute(events);
     }
-    LiveData<List<Event>> getEventsDate (String date) {
+    public LiveData<List<Event>> getEventsDate (String date) {
         return mEventDao.getEventsDate(date);
     }
     private static class insertAsyncTask extends AsyncTask<Event, Void, Void> {

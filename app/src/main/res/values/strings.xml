@@ -11,4 +11,5 @@
     <string name="group_page_title">Votre groupe</string>
     <string name="application_logo_string">Application_logo</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
+    <string name="campusString">campus</string>
 </resources>

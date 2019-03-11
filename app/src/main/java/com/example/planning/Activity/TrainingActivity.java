@@ -1,11 +1,10 @@
-package com.example.planning.Acitvity;
+package com.example.planning.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 
 import com.example.planning.Adapter.CardListAdapter;
 import com.example.planning.Model.Card;
@@ -26,13 +25,12 @@ public class TrainingActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         Cursus cursus = bundle.getParcelable("cursus");
-        Log.e("cursus", cursus.toString());
         mRecyclerView = findViewById(R.id.recyclerViewTraining);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ArrayList<Card> training = new ArrayList<>();
         switch(cursus.getCampus()){
-            case "Annecy":
+            case "ANNECY":
                 switch (cursus.getSchool()){
                     case "IUT":
                         switch(cursus.getDepartment()){
@@ -96,7 +94,7 @@ public class TrainingActivity extends AppCompatActivity {
                         break;
                 }
                 break;
-            case "Bourget":
+            case "BOURGET":
                 switch (cursus.getSchool()){
                     case "IUT":
                         break;
@@ -104,7 +102,7 @@ public class TrainingActivity extends AppCompatActivity {
                         break;
                 }
                 break;
-            case "Jacob":
+            case "JACOB":
                 switch (cursus.getSchool()){
                     case "DROIT":
                         break;
