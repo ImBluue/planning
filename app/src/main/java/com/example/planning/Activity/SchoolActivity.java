@@ -1,4 +1,4 @@
-package com.example.planning.Acitvity;
+package com.example.planning.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -31,16 +31,16 @@ public class SchoolActivity extends AppCompatActivity {
 
         ArrayList<Card> school = new ArrayList<>();
         switch(cursus.getCampus()){
-            case "Annecy":
+            case "ANNECY":
                 school.add(new Card( "IUT", Card.Category.SCHOOL, cursus));
                 school.add(new Card("IAE", Card.Category.SCHOOL, cursus));
                 school.add(new Card("POLYTECH", Card.Category.SCHOOL, cursus));
                 break;
-            case "Bourget":
+            case "BOURGET":
                 school.add(new Card( "IUT", Card.Category.SCHOOL, cursus));
                 school.add(new Card("POLYTECH", Card.Category.SCHOOL, cursus));
                 break;
-            case "Jacob":
+            case "JACOB":
                 school.add(new Card( "DROIT", Card.Category.SCHOOL, cursus));
                 school.add(new Card("IAE", Card.Category.SCHOOL, cursus));
                 school.add(new Card("POLYTECH", Card.Category.SCHOOL, cursus));

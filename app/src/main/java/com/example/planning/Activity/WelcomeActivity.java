@@ -1,4 +1,4 @@
-package com.example.planning.Acitvity;
+package com.example.planning.Activity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -29,13 +29,7 @@ public class WelcomeActivity extends AppCompatActivity {
 
             }
         });
-        localiseMe.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, MainActivity.class);
-                mContext.startActivity(intent);
 
-            }
-        });
 
     }
 

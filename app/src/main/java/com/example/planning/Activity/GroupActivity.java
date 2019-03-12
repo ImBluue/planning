@@ -1,4 +1,4 @@
-package com.example.planning.Acitvity;
+package com.example.planning.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +32,7 @@ public class GroupActivity extends AppCompatActivity {
 
         ArrayList<Card> group = new ArrayList<>();
         switch(cursus.getCampus()){
-            case "Annecy":
+            case "ANNECY":
                 switch (cursus.getSchool()){
                     case "IUT":
                         switch(cursus.getDepartment()){
@@ -161,7 +161,7 @@ public class GroupActivity extends AppCompatActivity {
                         break;
                 }
                 break;
-            case "Bourget":
+            case "BOURGET":
                 switch (cursus.getSchool()){
                     case "IUT":
                         break;
@@ -169,7 +169,7 @@ public class GroupActivity extends AppCompatActivity {
                         break;
                 }
                 break;
-            case "Jacob":
+            case "JACOB":
                 switch (cursus.getSchool()){
                     case "DROIT":
                         break;

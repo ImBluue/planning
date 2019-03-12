@@ -1,4 +1,4 @@
-package com.example.planning.Acitvity;
+package com.example.planning.Activity;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -30,7 +30,7 @@ public class DepartmentActivity extends AppCompatActivity {
 
         ArrayList<Card> dep = new ArrayList<>();
         switch(cursus.getCampus()){
-            case "Annecy":
+            case "ANNECY":
                 switch (cursus.getSchool()){
                     case "IUT":
                         dep.add(new Card("CSSAP", Card.Category.DEPARTMENT, cursus));
@@ -49,7 +49,7 @@ public class DepartmentActivity extends AppCompatActivity {
                         break;
                 }
                 break;
-            case "Bourget":
+            case "BOURGET":
                 switch (cursus.getSchool()){
                     case "IUT":
                         break;
@@ -57,7 +57,7 @@ public class DepartmentActivity extends AppCompatActivity {
                         break;
                 }
                 break;
-            case "Jacob":
+            case "JACOB":
                 switch (cursus.getSchool()){
                     case "DROIT":
                         break;

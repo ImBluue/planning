@@ -1,4 +1,4 @@
-package com.example.planning;
+package com.example.planning.NetworkUtils;
 
 import android.net.Uri;
 import android.util.Log;
@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class EventNetworkUtils {
+class EventNetworkUtils {
     private static final String TAG =
             EventNetworkUtils.class.getSimpleName();
 

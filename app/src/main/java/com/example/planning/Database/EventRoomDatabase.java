@@ -1,4 +1,4 @@
-package com.example.planning;
+package com.example.planning.Database;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
@@ -17,7 +17,7 @@ public abstract class EventRoomDatabase extends RoomDatabase {
 
     private static EventRoomDatabase INSTANCE;
 
-    public static EventRoomDatabase getDatabase(final Context context) {
+    static EventRoomDatabase getDatabase(final Context context) {
         if (INSTANCE == null) {
             synchronized (EventRoomDatabase.class) {
                 if (INSTANCE == null) {

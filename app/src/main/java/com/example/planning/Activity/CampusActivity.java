@@ -1,4 +1,4 @@
-package com.example.planning.Acitvity;
+package com.example.planning.Activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -27,9 +27,9 @@ public class CampusActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         ArrayList<Card> campus = new ArrayList<>();
-        campus.add(new Card( "Annecy", Card.Category.CAMPUS, new Cursus()));
-        campus.add(new Card("Bourget-du-Lac", Card.Category.CAMPUS, new Cursus()));
-        campus.add(new Card("Jacob-Bellecombette", Card.Category.CAMPUS, new Cursus()));
+        campus.add(new Card( "ANNECY", Card.Category.CAMPUS, new Cursus()));
+        campus.add(new Card("BOURGET", Card.Category.CAMPUS, new Cursus()));
+        campus.add(new Card("JACOB", Card.Category.CAMPUS, new Cursus()));
 
         mAdapter = new CardListAdapter(getApplicationContext(), campus);
         mRecyclerView.setAdapter(mAdapter);

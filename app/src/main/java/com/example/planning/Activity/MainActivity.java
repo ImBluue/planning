@@ -1,7 +1,8 @@
-package com.example.planning.Acitvity;
+package com.example.planning.Activity;
 
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,12 +14,11 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.example.planning.Adapter.EventListAdapter;
 import com.example.planning.Model.DisableWeekendsDecorator;
-import com.example.planning.EventLoader;
-import com.example.planning.EventViewModel;
+import com.example.planning.NetworkUtils.EventLoader;
+import com.example.planning.ViewModel.EventViewModel;
 import com.example.planning.Model.Cursus;
 import com.example.planning.Model.Event;
 import com.example.planning.R;
@@ -53,7 +53,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        setUpView();
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        Cursus cursus = bundle.getParcelable("cursus");
+        Log.e("cursus", cursus.toString());
+        setUpView(cursus);
 
 
 
@@ -75,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         return false;
     }
 
-    public void setUpView() {
+    public void setUpView(Cursus cursus) {
         percentBar = findViewById(R.id.progressBar1);
         mRecyclerView = findViewById(R.id.listRecyclerView);
         mRecyclerView.setVisibility(View.INVISIBLE);
@@ -132,10 +136,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
 
         if(isOnline()) {
-            startLoader(new Cursus("ANNECY", "IUT", "INFO", "INFO2S4", "G22"));
-            Toast.makeText(getApplicationContext(),
-                    "Updating...",
-                    Toast.LENGTH_LONG).show();
+            startLoader(cursus);
         } else
         {
             percentBar.setVisibility(View.INVISIBLE);
