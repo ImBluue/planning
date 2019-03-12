@@ -51,7 +51,7 @@ public class TrainingActivity extends AppCompatActivity {
                             case "GMP":
                                 training.add(new Card("GMP1", Card.Category.TRAINING, cursus));
                                 training.add(new Card("GMP2", Card.Category.TRAINING, cursus));
-                                training.add(new Card("TETRA", Card.Category.TRAINING, cursus));
+                                training.add(new Card("TETRAS", Card.Category.TRAINING, cursus));
                                 training.add(new Card("SKI_ETUDES", Card.Category.TRAINING, cursus));
                                 break;
                             case "INFO":

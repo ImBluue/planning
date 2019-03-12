@@ -26,7 +26,6 @@ public class DisableWeekendsDecorator implements DayViewDecorator {
 
     @Override
     public void decorate(DayViewFacade view) {
-        view.setBackgroundDrawable(highlightDrawable);
         view.setDaysDisabled(true);
     }
 }

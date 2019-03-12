@@ -3,6 +3,7 @@ package com.example.planning.Activity;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -22,6 +23,7 @@ import com.example.planning.ViewModel.EventViewModel;
 import com.example.planning.Model.Cursus;
 import com.example.planning.Model.Event;
 import com.example.planning.R;
+import com.google.gson.Gson;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import com.prolificinteractive.materialcalendarview.CalendarMode;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     private EventViewModel mEventViewModel;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
     private ProgressBar percentBar;
+    public static final String PREFS_NAME = "cursus";
+    private Cursus cursus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +59,16 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         setContentView(R.layout.activity_main);
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        Cursus cursus = bundle.getParcelable("cursus");
+        cursus = bundle.getParcelable("cursus");
         Log.e("cursus", cursus.toString());
+
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        Gson gson = new Gson();
+        String json = gson.toJson(cursus);
+        editor.putString("cursus", json);
+        // Commit the edits!
+        editor.apply();
         setUpView(cursus);
 
 
@@ -137,6 +149,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
         if(isOnline()) {
             startLoader(cursus);
+            Log.e("internet", "ok");
         } else
         {
             percentBar.setVisibility(View.INVISIBLE);

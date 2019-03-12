@@ -104,20 +104,73 @@ public class GroupActivity extends AppCompatActivity {
                                 }
                                 break;
                             case "GMP":
-                                /*
-                                training.add(new Card("GMP1", Card.Category.TRAINING, cursus));
-                                training.add(new Card("GMP2", Card.Category.TRAINING, cursus));
-                                training.add(new Card("TETRA", Card.Category.TRAINING, cursus));
-                                training.add(new Card("SKI_ETUDES", Card.Category.TRAINING, cursus));
-                                */
+                                switch (cursus.getTraining()){
+                                    case "GMP1":
+                                        group.add(new Card("A1", Card.Category.GROUP, cursus));
+                                        group.add(new Card("A2", Card.Category.GROUP, cursus));
+                                        group.add(new Card("B1", Card.Category.GROUP, cursus));
+                                        group.add(new Card("B2", Card.Category.GROUP, cursus));
+                                        group.add(new Card("C1", Card.Category.GROUP, cursus));
+                                        group.add(new Card("C2", Card.Category.GROUP, cursus));
+                                        group.add(new Card("D1", Card.Category.GROUP, cursus));
+                                        group.add(new Card("D2", Card.Category.GROUP, cursus));
+                                        break;
+                                    case "GMP2":
+                                        group.add(new Card("X1", Card.Category.GROUP, cursus));
+                                        group.add(new Card("X2", Card.Category.GROUP, cursus));
+                                        group.add(new Card("Y1", Card.Category.GROUP, cursus));
+                                        group.add(new Card("Y2", Card.Category.GROUP, cursus));
+                                        group.add(new Card("Z1", Card.Category.GROUP, cursus));
+                                        group.add(new Card("Z2", Card.Category.GROUP, cursus));
+                                        break;
+                                    case "TETRAS":
+                                        group.add(new Card("CMAO1A", Card.Category.GROUP, cursus));
+                                        group.add(new Card("CMAO1B", Card.Category.GROUP, cursus));
+                                        group.add(new Card("CMAO2A", Card.Category.GROUP, cursus));
+                                        group.add(new Card("CMAO2B", Card.Category.GROUP, cursus));
+                                        group.add(new Card("RSPI1A", Card.Category.GROUP, cursus));
+                                        group.add(new Card("RSPI1B", Card.Category.GROUP, cursus));
+                                        group.add(new Card("RSPI2A", Card.Category.GROUP, cursus));
+                                        group.add(new Card("RSPI2B", Card.Category.GROUP, cursus));
+                                        group.add(new Card("RSPI3A", Card.Category.GROUP, cursus));
+                                        break;
+                                    case "SKI_ETUDES":
+                                        group.add(new Card("SE1", Card.Category.GROUP, cursus));
+                                        group.add(new Card("SE2", Card.Category.GROUP, cursus));
+                                        group.add(new Card("SE3", Card.Category.GROUP, cursus));
+                                        break;
+                                }
                                 break;
                             case "INFO":
-                                /*
-                                training.add(new Card("INFO1", Card.Category.TRAINING, cursus));
-                                training.add(new Card("INFO2S3", Card.Category.TRAINING, cursus));
-                                training.add(new Card("INFO2S4", Card.Category.TRAINING, cursus));
-                                training.add(new Card("LP", Card.Category.TRAINING, cursus));
-                                */
+                                switch (cursus.getTraining()){
+                                    case "INFO1":
+                                        group.add(new Card("TP11", Card.Category.GROUP, cursus));
+                                        group.add(new Card("TP12", Card.Category.GROUP, cursus));
+                                        group.add(new Card("TP13", Card.Category.GROUP, cursus));
+                                        group.add(new Card("TP14", Card.Category.GROUP, cursus));
+                                        group.add(new Card("TP15", Card.Category.GROUP, cursus));
+                                        group.add(new Card("TP16", Card.Category.GROUP, cursus));
+                                        group.add(new Card("TP17", Card.Category.GROUP, cursus));
+                                        group.add(new Card("TP18", Card.Category.GROUP, cursus));
+                                        break;
+                                    case "INFO2S3":
+                                        group.add(new Card("G21", Card.Category.GROUP, cursus));
+                                        group.add(new Card("G22", Card.Category.GROUP, cursus));
+                                        group.add(new Card("G23", Card.Category.GROUP, cursus));
+                                        group.add(new Card("G24", Card.Category.GROUP, cursus));
+                                        break;
+                                    case "INFO2S4":
+                                        group.add(new Card("G21", Card.Category.GROUP, cursus));
+                                        group.add(new Card("G22", Card.Category.GROUP, cursus));
+                                        group.add(new Card("G23", Card.Category.GROUP, cursus));
+                                        group.add(new Card("G24", Card.Category.GROUP, cursus));
+                                        break;
+                                    case "LP":
+                                        group.add(new Card("BDD", Card.Category.GROUP, cursus));
+                                        group.add(new Card("CPINFO", Card.Category.GROUP, cursus));
+                                        group.add(new Card("DIM", Card.Category.GROUP, cursus));
+                                        break;
+                                }
                                 break;
                             case "MPH":
                                 /*
