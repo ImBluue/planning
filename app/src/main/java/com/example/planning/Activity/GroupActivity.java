@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.example.planning.Adapter.CardListAdapter;
 import com.example.planning.Model.Card;
@@ -18,6 +19,7 @@ public class GroupActivity extends AppCompatActivity {
 
     private RecyclerView mRecyclerView;
     private CardListAdapter mAdapter;
+    private TextView mTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,8 @@ public class GroupActivity extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         Cursus cursus = bundle.getParcelable("cursus");
         Log.e("cursus", cursus.toString());
+        mTextView = findViewById(R.id.txtGroup_askTraining);
+        mTextView.setText(cursus.getTraining());
         mRecyclerView = findViewById(R.id.recyclerViewGroup);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 

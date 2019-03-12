@@ -14,7 +14,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.planning.Adapter.EventListAdapter;
 import com.example.planning.Model.DisableWeekendsDecorator;
@@ -44,12 +46,14 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<String> {
     private RecyclerView mRecyclerView;
+    private TextView mTextView;
     private String TAG = MainActivity.class.getSimpleName();
     private ArrayList<Event> mEventData;
     private EventListAdapter mAdapter;
     private EventViewModel mEventViewModel;
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yy");
     private ProgressBar percentBar;
+    private Button btnChange;
     public static final String PREFS_NAME = "cursus";
     private Cursus cursus;
 
@@ -76,6 +80,11 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
     }
 
+    @Override
+    public void onBackPressed() {
+// dont call **super**, if u want disable back button in current screen.
+    }
+
     public static boolean isOnline() {
         Runtime runtime = Runtime.getRuntime();
         try {
@@ -92,10 +101,21 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public void setUpView(Cursus cursus) {
+        btnChange = findViewById(R.id.btnChange);
+        btnChange.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent in = new Intent(getApplicationContext(), WelcomeActivity.class);
+                in.putExtra("change",true);
+                getApplicationContext().startActivity(in);
+            }});
         percentBar = findViewById(R.id.progressBar1);
         mRecyclerView = findViewById(R.id.listRecyclerView);
         mRecyclerView.setVisibility(View.INVISIBLE);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        //Initialize the cursus resume on top
+        mTextView = findViewById(R.id.txtMain_askCursus);
+        mTextView.setText(cursus.getCampus()+" - "+cursus.getSchool()+" - "+cursus.getDepartment()+" - "+cursus.getGroup());
 
         // Initialize the ArrayList that will contain the data.
         mEventData = new ArrayList<>();
