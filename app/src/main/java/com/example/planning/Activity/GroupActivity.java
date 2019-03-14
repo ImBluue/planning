@@ -28,7 +28,6 @@ public class GroupActivity extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
         Cursus cursus = bundle.getParcelable("cursus");
-        Log.e("cursus", cursus.toString());
         mTextView = findViewById(R.id.txtGroup_askTraining);
         mTextView.setText(cursus.getTraining());
         mRecyclerView = findViewById(R.id.recyclerViewGroup);
