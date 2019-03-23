@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.planning.Model.Cursus;
+import com.example.planning.NotifyService;
 import com.example.planning.R;
 import com.google.gson.Gson;
 
@@ -27,6 +28,10 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
+
+        startService(new Intent(this, NotifyService.class));
+
+
         mContext = getApplicationContext();
         SharedPreferences mPrefs = getSharedPreferences(PREFS_NAME, 0);
         Gson gson = new Gson();
@@ -57,10 +62,10 @@ public class WelcomeActivity extends AppCompatActivity {
                     if (cursus != null) {
                         Intent intent = new Intent(mContext, MainActivity.class);
                         intent.putExtra("cursus", cursus);
-                        Toast.makeText(mContext, "Ni internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "No internet", Toast.LENGTH_SHORT).show();
                         mContext.startActivity(intent);
                     } else {
-                        Toast.makeText(mContext, "Ni internet", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(mContext, "No internet", Toast.LENGTH_SHORT).show();
                     }
 
                 }

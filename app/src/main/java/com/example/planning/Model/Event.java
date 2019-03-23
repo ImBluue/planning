@@ -27,7 +27,6 @@ public class Event {
     @NonNull
     @ColumnInfo(name = "day")
     private String day;
-
     @Override
     public String toString() {
         return "Event{" +
@@ -45,7 +44,6 @@ public class Event {
         this.day = day;
         this.end = end;
         this.start = start;
-
 
 
     }

@@ -12,4 +12,9 @@
     <string name="application_logo_string">Application_logo</string>
     <string name="title_activity_welcome">WelcomeActivity</string>
     <string name="change_cursus_button_string">Changer</string>
+    <string name="notification_channel_name">planning</string>
+    <string name="notification_channel_description">planning</string>
+    <string name="goEDT">Aller au planning</string>
+    <string name="notification_title">Planning USMB</string>
+    <string name="notification_text">Vous avez un cours bientôt !</string>
 </resources>
