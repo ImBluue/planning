@@ -148,6 +148,7 @@ public class NotifyService extends Service {
             Log.e("dateRec", intent.getStringExtra("date"));
             Toast.makeText(context, "Rec", Toast.LENGTH_SHORT).show();
             sendNotification();
+            unregisterReceiver(mReceiver);
         }
 
     }

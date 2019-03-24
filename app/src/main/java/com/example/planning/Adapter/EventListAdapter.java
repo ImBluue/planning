@@ -46,13 +46,14 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     public void onBindViewHolder(@NonNull EventViewHolder eventViewHolder, int i) {
         // Get current sport.
         Event currentEvent = mEventsData.get(i);
-        Log.e("e", currentEvent.toString());
+        //Log.e("e", currentEvent.toString());
 
         // Populate the textviews with data.
         eventViewHolder.bindTo(currentEvent);
         alarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("YY-MM-dd hh:mm");
+        /*
         Log.e("current day", currentEvent.getDay());
         Log.e("start",currentEvent.getStart());
         Log.e("day",currentEvent.getDay());
@@ -61,7 +62,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         Log.e("day",Integer.parseInt(currentEvent.getDay().substring(0,2))+"");
         Log.e("Month",Integer.parseInt(currentEvent.getDay().substring(3,5))+"");
         Log.e("year",Integer.parseInt(currentEvent.getDay().substring(6))+"");
-
+        */
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(currentEvent.getStart().substring(0,2)));
         calendar.set(Calendar.MINUTE, Integer.parseInt(currentEvent.getStart().substring(3)));
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(currentEvent.getDay().substring(0,2)));
@@ -72,10 +73,12 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         Log.d("alarm calendar",  sdf.format(calendarDate));
         Intent intentAlarm = new Intent(ACTION_UPDATE_NOTIFICATION);
         intentAlarm.putExtra("date",currentEvent.getDescription());
+
         PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, intentAlarm, 0);
 
         //alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), intervalSpan, pendingIntent);
         alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
     }
 
     public void setEvents(List<Event> events){
