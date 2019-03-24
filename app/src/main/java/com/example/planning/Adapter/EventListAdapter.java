@@ -14,7 +14,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.planning.Model.Event;
-import com.example.planning.NotifyService;
 import com.example.planning.R;
 
 import java.text.SimpleDateFormat;

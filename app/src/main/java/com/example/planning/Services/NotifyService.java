@@ -1,4 +1,4 @@
-package com.example.planning;
+package com.example.planning.Services;
 
 import android.app.AlarmManager;
 import android.app.NotificationChannel;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.example.planning.Activity.MainActivity;
 import com.example.planning.Activity.WelcomeActivity;
+import com.example.planning.R;
 
 import java.util.Calendar;
 import java.util.Timer;

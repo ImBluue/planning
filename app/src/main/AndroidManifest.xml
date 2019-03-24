@@ -8,6 +8,12 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -35,13 +41,14 @@
             android:name=".Activity.MainActivity"
             android:screenOrientation="portrait" />
 
-        <service android:name=".NotifyService" android:enabled="true">
+        <service android:name=".Services.NotifyService" android:enabled="true">
         <intent-filter>
             <action android:name="android.intent.action.MAIN" />
             <action android:name="android.intent.action.BOOT_COMPLETED" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter></service>
-        <receiver android:name="com.example.planning.NotifyService$NotificationReceiver">
+
+        <receiver android:name="com.example.planning.Services.NotifyService$NotificationReceiver">
         <intent-filter>
             <action android:name="android.intent.action.BOOT_COMPLETED" />
         </intent-filter></receiver>

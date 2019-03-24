@@ -1,15 +1,19 @@
 package com.example.planning.Activity;
 
+import android.Manifest;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.LoaderManager;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
@@ -148,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
         btnExport.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Bitmap bitmap = takeScreenshot();
                 saveBitmap(bitmap);
                 shareIt();
@@ -310,12 +315,20 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
     }
 
     public Bitmap takeScreenshot() {
+        try {
+            if ((ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ) || (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED )) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 101);
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
         View rootView = findViewById(android.R.id.content).getRootView();
         rootView.setDrawingCacheEnabled(true);
         return rootView.getDrawingCache();
     }
 
     public void saveBitmap(Bitmap bitmap) {
+
         imagePath = new File(Environment.getExternalStorageDirectory() + "/screenshot.png");
         FileOutputStream fos;
         try {

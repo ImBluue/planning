@@ -15,7 +15,7 @@ public class Cursus implements Parcelable {
         this.training = training;
         this.group = group;
     }
-    private String campus;
+    private String campus = "";
 
     @Override
     public String toString() {
@@ -28,10 +28,10 @@ public class Cursus implements Parcelable {
                 '}';
     }
 
-    private String school;
-    private String department;
-    private String training;
-    private String group;
+    private String school = "";
+    private String department = "";
+    private String training = "";
+    private String group = "";
 
     public Cursus() {
     }
