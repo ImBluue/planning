@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements LoaderManager.Loa
 
                 WeekFields weekFields = WeekFields.of(Locale.getDefault());
                 int weekNumber = date.getDate().get(weekFields.weekOfWeekBasedYear());
-                Toast.makeText(getApplicationContext(), weekNumber+"", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getApplicationContext(), weekNumber+"", Toast.LENGTH_SHORT).show();
 
             }
         });
